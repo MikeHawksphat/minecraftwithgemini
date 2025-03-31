@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voxel World</title>
+    <link rel="stylesheet" href="style.css"> </head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="fps-counter">FPS: ...</div>
+    <div id="coords-hud">XYZ: ...</div>
+    <div id="crosshair">+</div>
+    <div id="inventory-ui">
+        <div class="inventory-section inventory-main"> <p class="inventory-label">Inventory</p> <div id="inventory-grid"></div> </div>
+        <div class="inventory-section inventory-crafting"> <p class="inventory-label">Crafting</p> <div class="crafting-area"> <div id="crafting-grid-input" class="crafting-grid crafting-grid-2x2"> <div class="slot crafting-input-slot" data-crafting-index="0"></div> <div class="slot crafting-input-slot" data-crafting-index="1"></div> <div class="slot crafting-input-slot" data-crafting-index="2"></div> <div class="slot crafting-input-slot" data-crafting-index="3"></div> </div> <div class="crafting-arrow">➡️</div> <div id="crafting-grid-output" class="crafting-output"> <div class="slot crafting-output-slot"></div> </div> </div> </div>
+        <div class="inventory-section inventory-hotbar"> <div id="hotbar-proxy"></div> </div>
+    </div>
+    <div id="hotbar"></div>
+    <div id="held-item-visual"> <div class="item-icon"></div> <span class="item-count"></span> </div>
+
+    <script type="importmap"> { "imports": { "three": "https://unpkg.com/three@0.163.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/", "three/addons/controls/PointerLockControls.js": "https://unpkg.com/three@0.163.0/examples/jsm/controls/PointerLockControls.js" } } </script>
+
+    <script src="js/lib/simplex-noise.js"></script>
+    <script type="module" src="js/world/ChunkManager.js"></script>
+    <script type="module" src="js/utils/FPScounter.js"></script>
+    <script type="module" src="js/world/Noise.js"></script>
+    <script type="module" src="js/sceneSetup.js"></script>
+    <script type="module" src="js/CraftingRecipes.js"></script> <script type="module" src="js/Inventory.js"></script>
+    <script type="module" src="js/Player.js"></script>
+    <script type="module" src="js/main.js"></script> </body>
+</html>

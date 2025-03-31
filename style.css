@@ -1,0 +1,259 @@
+/* General Styling */
+body {
+    margin: 0;
+    overflow: hidden; /* Prevent scrollbars */
+    background-color: #87CEEB; /* Sky blue background */
+    color: white; /* Default text color for UI */
+    font-family: sans-serif; /* Basic font */
+    user-select: none; /* Prevent text selection on UI elements */
+}
+
+canvas {
+    display: block; /* Remove potential extra space below canvas */
+}
+
+/* UI Overlays */
+#fps-counter, #coords-hud {
+    position: fixed;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px 10px;
+    font-family: monospace;
+    font-size: 14px;
+    border-radius: 3px;
+    z-index: 100;
+    pointer-events: none; /* Allow clicks to go through */
+}
+#fps-counter { top: 10px; }
+#coords-hud { top: 40px; /* Position below FPS counter */ }
+
+#crosshair {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* --- Slot Styling (Common) --- */
+.slot {
+    width: 50px; /* Standard slot size */
+    height: 50px;
+    border: 1px solid #555;
+    margin: 2px;
+    background-color: rgba(100, 100, 100, 0.5); /* Default slot background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* For item count positioning */
+    box-sizing: border-box; /* Include border in size */
+    overflow: hidden; /* Prevent content spillover */
+    cursor: pointer; /* Indicate interactivity */
+    transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, outline 0.1s ease-in-out;
+}
+
+.item-icon {
+    width: 36px; /* Icon size within slot */
+    height: 36px;
+    background-size: contain; /* Scale texture */
+    background-repeat: no-repeat;
+    background-position: center;
+    /* Pixelated rendering */
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    pointer-events: none; /* Icons themselves aren't interactive */
+}
+
+.item-count {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px black; /* Readability */
+    pointer-events: none;
+}
+
+/* --- Hotbar (Gameplay) --- */
+#hotbar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    padding: 5px;
+    z-index: 10; /* Above canvas, below inventory */
+}
+
+.hotbar-slot { /* Slots in #hotbar */
+    opacity: 0.7; /* Slightly transparent when not selected */
+    /* No hover effect needed here as it's not interactive directly */
+}
+
+.hotbar-slot.selected {
+    border-color: white;
+    border-width: 2px;
+    opacity: 1.0; /* Fully opaque when selected */
+}
+
+/* --- Full Inventory UI --- */
+#inventory-ui {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Width calculation: 9 slots + margins/padding */
+    /* width: calc(9 * 50px + 9 * 4px + 20px + 20px); Adjust as needed */
+    width: auto; /* Let content determine width */
+    padding: 15px;
+    background-color: rgba(10, 10, 10, 0.85); /* Darker, less transparent */
+    border: 3px solid #333; /* Darker border */
+    border-radius: 5px;
+    z-index: 50; /* High z-index to be on top */
+    display: none; /* Hidden by default */
+    flex-direction: column; /* Stack sections vertically */
+    align-items: center; /* Center sections horizontally */
+    gap: 15px; /* Space between sections */
+}
+
+#inventory-ui.inventory-visible {
+    display: flex; /* Show when inventory is open */
+}
+
+/* Sections within Inventory UI */
+.inventory-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Take full width of parent */
+}
+
+.inventory-label {
+    font-size: 16px;
+    color: #ccc;
+    margin-bottom: 8px;
+    text-align: center;
+    width: 100%;
+}
+
+/* Main Inventory Grid (3x9) */
+#inventory-grid {
+    display: grid;
+    /* 9 columns, auto row height */
+    grid-template-columns: repeat(9, 54px); /* 50px width + 2*2px margin */
+    gap: 0px; /* No extra gap needed due to slot margins */
+    justify-content: center; /* Center grid items if space */
+}
+
+/* Inventory Slot Specifics (if needed) */
+.inventory-slot {
+    /* Default slot style is usually fine */
+     opacity: 0.8; /* Slightly transparent */
+}
+
+
+/* --- Player Crafting Grid (2x2 + Output) --- */
+.inventory-crafting {
+    /* Styles for the crafting section container */
+}
+
+.crafting-area {
+    display: flex;
+    align-items: center; /* Vertically align grid and arrow/output */
+    justify-content: center; /* Center items horizontally */
+    gap: 10px; /* Space between input grid, arrow, output */
+}
+
+.crafting-grid {
+    display: grid;
+    gap: 0px; /* Slots have own margins */
+    background-color: rgba(0, 0, 0, 0.2); /* Slightly different background */
+    border: 1px dashed #777; /* Indicate crafting area */
+    padding: 2px; /* Small padding around grid */
+}
+
+.crafting-grid-2x2 {
+    grid-template-columns: repeat(2, 54px); /* 2 columns */
+}
+
+.crafting-input-slot {
+    /* Specific styles for input slots if needed */
+}
+
+.crafting-arrow {
+    font-size: 24px;
+    color: #ccc;
+    margin: 0 5px; /* Add some horizontal margin */
+}
+
+.crafting-output {
+    /* Container for the output slot */
+     border: 1px solid #888;
+     padding: 2px;
+}
+
+.crafting-output-slot {
+    /* Specific styles for output slot */
+    background-color: rgba(50, 50, 50, 0.6); /* Darker background? */
+}
+
+/* Hotbar Proxy (Inside Inventory UI) */
+#hotbar-proxy {
+    display: flex;
+    justify-content: center; /* Center hotbar slots */
+    /* border-top: 1px solid #555; /* Optional separator */
+    /* padding-top: 10px; */
+}
+
+.hotbar-proxy-slot {
+    /* Styles for slots within the proxy hotbar */
+    /* Usually same as .hotbar-slot without the .selected logic here */
+     opacity: 0.7;
+}
+.hotbar-proxy-slot.selected { /* Apply selected style to proxy too */
+    border-color: white;
+    border-width: 2px;
+    opacity: 1.0;
+}
+
+
+/* --- Hover/Interaction Effects --- */
+/* Target slots *within* the inventory UI or hotbar proxy for hover */
+#inventory-ui .slot:hover {
+    background-color: rgba(180, 180, 180, 0.7) !important; /* Lighter background */
+    outline: 2px solid yellow !important; /* Bright yellow outline */
+    outline-offset: -2px; /* Keep outline inside the border */
+}
+/* Exclude non-interactive output slot from hover */
+#inventory-ui .crafting-output-slot:hover {
+    background-color: rgba(50, 50, 50, 0.6) !important; /* Keep original background */
+    outline: none !important; /* No outline */
+    cursor: default; /* Not clickable */
+}
+
+
+/* --- Held Item Visual (Dragging) --- */
+#held-item-visual {
+    position: absolute; /* Positioned by JS */
+    width: 50px; /* Match slot size */
+    height: 50px;
+    z-index: 101; /* Above everything else */
+    pointer-events: none; /* Doesn't interfere with clicks */
+    display: none; /* Hidden until item is held */
+    justify-content: center;
+    align-items: center;
+    opacity: 0.8; /* Slightly transparent while dragging */
+    background-color: rgba(0, 0, 0, 0.3); /* Optional subtle background */
+    border-radius: 3px;
+}
+
+/* Icon and count inside held item use default .item-icon, .item-count styles */
